@@ -1,5 +1,6 @@
 package com.example.instagramclone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,10 @@ public class SignUpLoginActivity extends AppCompatActivity  {
                         {
                             FancyToast.makeText(SignUpLoginActivity.this,appUser.get("username")+" is signedup successfuly ", FancyToast.LENGTH_LONG, FancyToast.DEFAULT, true).show();
 
+                            Intent intent=new Intent(SignUpLoginActivity.this,WelcomeActivity.class);
+                            startActivity(intent);
+
+
                         }
                         else
                         {
@@ -70,6 +75,9 @@ public class SignUpLoginActivity extends AppCompatActivity  {
                         if(user!=null && e==null)
                         {
                             FancyToast.makeText(SignUpLoginActivity.this,user.get("username")+" is logged in successfuly ", FancyToast.LENGTH_LONG, FancyToast.DEFAULT, true).show();
+
+                            Intent intent=new Intent(SignUpLoginActivity.this,WelcomeActivity.class);
+                            startActivity(intent);
 
                         }
                         else
