@@ -2,6 +2,7 @@ package com.example.instagramclone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             FancyToast.makeText(LoginActivity.this,user.getUsername()+" is logged in successfully ",
                                     Toast.LENGTH_LONG,
                                     FancyToast.SUCCESS,true).show();
+                            transitionTOSocialMediaActvity();
                         }
                         else
                         {
@@ -98,5 +100,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         }
 
+    }
+    private void transitionTOSocialMediaActvity()
+    {
+        Intent intent=new Intent(LoginActivity.this,SocialMediaActivity.class);
+        startActivity(intent);
     }
 }

@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(ParseUser.getCurrentUser()!=null)
         {
-            ParseUser.getCurrentUser().logOut();
+            //ParseUser.getCurrentUser().logOut();
+            transitionTOSocialMediaActvity();
         }
 
     }
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     FancyToast.makeText(MainActivity.this, "Email,UserName,Password is required ",
                             Toast.LENGTH_SHORT,
                             FancyToast.INFO, true).show();
+
                 } else {
 
 
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 FancyToast.makeText(MainActivity.this, appUser.getUsername() + " is signed up successfully ",
                                         Toast.LENGTH_LONG,
                                         FancyToast.SUCCESS, true).show();
+                                transitionTOSocialMediaActvity();
                             } else {
                                 FancyToast.makeText(MainActivity.this, "There is something error" + e.getMessage(),
                                         Toast.LENGTH_LONG,
@@ -131,6 +134,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
+    }
+    private void transitionTOSocialMediaActvity()
+    {
+        Intent intent=new Intent(MainActivity.this,SocialMediaActivity.class);
+        startActivity(intent);
     }
 
 }
