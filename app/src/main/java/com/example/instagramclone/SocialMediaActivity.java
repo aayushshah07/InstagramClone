@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
-
+import android.app.ProgressDialog;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -134,6 +134,11 @@ public class SocialMediaActivity extends AppCompatActivity {
                 ParseObject parseObject=new ParseObject("Photo");
                 parseObject.put("picture",parseFile);
                 parseObject.put("username", ParseUser.getCurrentUser().getUsername());
+
+
+                final ProgressDialog dialog = new ProgressDialog(this);
+                dialog.setMessage("Loading...");
+                dialog.show();
 
                 parseObject.saveInBackground(new SaveCallback() {
                     @Override

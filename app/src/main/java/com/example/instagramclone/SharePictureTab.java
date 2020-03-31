@@ -11,7 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
+import android.app.ProgressDialog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -114,10 +114,10 @@ public class SharePictureTab extends Fragment implements View.OnClickListener {
                         parseObject.put("picture", parseFile);
                         parseObject.put("image_des", edtDescription.getText().toString());
                         parseObject.put("username", ParseUser.getCurrentUser().getUsername());
-//                       final ProgressD dialog = new ProgressDialog(getContext());
-//                        dialog.setMessage("Loading...");
-//                        dialog.show();
-//
+                       final ProgressDialog dialog = new ProgressDialog(getContext());
+                        dialog.setMessage("Loading...");
+                        dialog.show();
+
                         parseObject.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
@@ -126,6 +126,7 @@ public class SharePictureTab extends Fragment implements View.OnClickListener {
                                 } else {
                                     FancyToast.makeText(getContext(), "Unknown error: " + e.getMessage(), Toast.LENGTH_SHORT, FancyToast.ERROR, true).show();
                                 }
+                               dialog.dismiss();
 
                             }
                         });

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.ProgressDialog;
 
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class UsersPost extends AppCompatActivity {
 
-        private LinearLayout linearLayout;
+    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +41,15 @@ public class UsersPost extends AppCompatActivity {
         setTitle(receivedUserName+"'s posts");
 
 
-        ParseQuery <ParseObject> parseQuery=new ParseQuery<ParseObject>("Photos");
+        ParseQuery <ParseObject> parseQuery=new ParseQuery<ParseObject>("Photo");
         parseQuery.whereEqualTo("username",receivedUserName);
         parseQuery.orderByDescending("createdAt");
 
-        ///////Dialog dialog=new Dialog(this);
-//        dialog.setTitle("Loading ... ");
-//        dialog.show();
+
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
+        dialog.show();
+
 
         parseQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -56,7 +59,7 @@ public class UsersPost extends AppCompatActivity {
                 {
                     for(ParseObject post : objects){
                         final TextView postDescription=new TextView(UsersPost.this);
-                        postDescription.setText(post.get("image_des")+"");
+                        postDescription.setText(post.get("image_des")+" ");
 
                         ParseFile postPicture=(ParseFile) post.get("picture");
 
@@ -75,9 +78,13 @@ public class UsersPost extends AppCompatActivity {
                                     postImageView.setImageBitmap(bitmap);
 
                                     LinearLayout.LayoutParams des_params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-                                    des_params.setMargins(5,5,5,5);
+                                    des_params.setMargins(5,5,5,15);
                                     postDescription.setGravity(Gravity.CENTER);
                                     postDescription.setTextSize(24f);
+                                 //   postDescription.setBackgroundColor(RED);
+                                  //  postDescription.setTextColor(WHITE);
+                                    postDescription.setTextSize(30f);
+
 
 
                                     linearLayout.addView(postImageView);
@@ -85,15 +92,17 @@ public class UsersPost extends AppCompatActivity {
 
 
                                 }
-                                else
-                                {
-                                    FancyToast.makeText(UsersPost.this,receivedUserName+" doesn't have any post ",Toast.LENGTH_SHORT,FancyToast.INFO,true).show();
-                                    finish();
-                                }
+
                             }
                         });
                     }
                 }
+                else
+                {
+                    FancyToast.makeText(UsersPost.this,receivedUserName+" doesn't have any post ",Toast.LENGTH_SHORT,FancyToast.INFO,true).show();
+                    finish();
+                }
+                dialog.dismiss();
 
             }
         });
