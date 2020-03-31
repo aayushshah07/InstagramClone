@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Intent intent=new Intent(MainActivity.this,SocialMediaActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }

@@ -1,6 +1,8 @@
 package com.example.instagramclone;
 
 
+import android.content.Intent;
+import android.icu.text.Transliterator;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,10 +29,11 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 
-public class UsersTab extends Fragment {
+
+public class UsersTab extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
-    private ArrayList arrayList;
+    private ArrayList <String> arrayList;
     private ArrayAdapter arrayAdapter;// ArrayAdapter is controller which update our list view based on data
 
     public UsersTab() {
@@ -48,6 +53,9 @@ public class UsersTab extends Fragment {
         txtUpdate=view.findViewById(R.id.txtUpadate);
 
         arrayAdapter=new ArrayAdapter(getContext(),R.layout.support_simple_spinner_dropdown_item,arrayList);
+
+        listView.setOnItemClickListener(UsersTab.this);
+
         // to get data from server or to fetvh data from server
         ParseQuery<ParseUser>parseQuery=ParseUser.getQuery();
         parseQuery.whereNotEqualTo("username",ParseUser.getCurrentUser().getUsername());
@@ -74,4 +82,14 @@ public class UsersTab extends Fragment {
         return view;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Intent intent=new Intent(getContext(),UsersPost.class);
+        intent.putExtra("username",arrayList.get(position));
+        startActivity(intent);
+
+        
+
+    }
 }
